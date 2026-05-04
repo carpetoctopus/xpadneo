@@ -1,0 +1,4 @@
+config CONFIG_XPADNEO
+	tristate "Xbox Wireless Controller Driver"
+	help
+	  Xbox wireless controller support.

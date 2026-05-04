@@ -1,24 +1,12 @@
-KERNEL_SOURCE_DIR ?= /lib/modules/$(shell uname -r)/build
-LD := ld.bfd
-
-all: modules
-
-.INTERMEDIATE: ../VERSION
-
-../VERSION:
-	$(MAKE) -C .. $(@:../%=%)
-
-# convenience rules for local development
-
-clean modules modules_install: ../VERSION
-	$(MAKE) -C $(KERNEL_SOURCE_DIR) INSTALL_MOD_DIR="kernel/drivers/hid" LD=$(LD) M=$(shell pwd)/src VERSION="$(shell cat ../VERSION)" $@
-
-reinstall: modules
-	sudo make modules_install
-	sudo rmmod hid-xpadneo || true
-	sudo modprobe hid-xpadneo $(MOD_PARAMS)
-
-# DKMS support rules
-
-dkms.conf: dkms.conf.in ../VERSION
-	sed 's/"@DO_NOT_CHANGE@"/"$(shell cat ../VERSION)"/g' <"$<" >"$@"
+KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
+M ?= $(shell pwd)
+KBUILD_OPTIONS := CONFIG_XPADNEO=m
+EXTRA_CFLAGS += -DVERSION=\"0.11\"
+include $(ROOT_DIR)/private/google-modules/soc/gs/Makefile.include
+modules modules_install clean compile_commands.json:
+	$(MAKE) -C $(KERNEL_SRC) M=$(M) W=1 \
+	$(KBUILD_OPTIONS) \
+	INSTALL_MOD_DIR="kernel/drivers/hid" \
+	EXTRA_CFLAGS="$(EXTRA_CFLAGS)" \
+	KBUILD_EXTRA_SYMBOLS="$(EXTRA_SYMBOLS)" \
+	$(@)
