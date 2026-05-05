@@ -1,5 +1,5 @@
-config XPADNEO
+config HID_XPADNEO
 	tristate "Xbox Wireless Controller Driver"
-	select HID
+	select POWER_SUPPLY
 	help
 	  Xbox wireless controller support.

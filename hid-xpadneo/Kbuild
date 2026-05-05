@@ -1,5 +1,5 @@
-obj-$(CONFIG_XPADNEO) += hid-xpadneo.o
-hid-xpadneo-$(CONFIG_XPADNEO) += \
+obj-$(CONFIG_HID_XPADNEO) += hid-xpadneo.o
+hid-xpadneo-$(CONFIG_HID_XPADNEO) += \
 	consumer.o \
 	core.o \
 	debug.o \
