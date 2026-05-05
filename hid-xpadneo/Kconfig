@@ -1,5 +1,7 @@
 config HID_XPADNEO
-	tristate "Xbox Wireless Controller Driver"
-	select POWER_SUPPLY
-	help
-	  Xbox wireless controller support.
+        tristate "Xbox Wireless Controller Driver"
+        select POWER_SUPPLY
+        select HID
+        select CRC16
+        help
+          Xbox wireless controller support.
