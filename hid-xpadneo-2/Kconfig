@@ -1,0 +1,5 @@
+config XPADNEO
+	tristate "Xbox Wireless Controller Driver"
+	select HID
+	help
+	  Xbox wireless controller support.
